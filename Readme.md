@@ -34,22 +34,19 @@ override func textDidChange(_ textInput: (any UITextInput)?) {
 
 func inputCharacter(_ string: String) {
 
-    let result = kutomata.input(string)
-
     guard textDocumentProxy.hasText else {
         kutomata.clearExistingText()
+        _ = kutomata.input(string)
         textDocumentProxy.insertText(string)
         return
     }
     
-    let stringToInput = result.stringToInput
-    guard result.needToModifyLastText else {
-        textDocumentProxy.insertText(stringToInput)
-        return
+    let result = kutomata.input(string)
+    if result.needToModifyLastText {
+        textDocumentProxy.deleteBackward()
     }
     
-    textDocumentProxy.deleteBackward()
-    textDocumentProxy.insertText(stringToInput)
+    textDocumentProxy.insertText(result.stringToInput)
 }
 
 func deleteCharacter() {
@@ -61,7 +58,8 @@ func deleteCharacter() {
     guard let stringToInput = result.stringToInput else { return }
     
     if result.needToModifyPreviousText,
-        textDocumentProxy.documentContextBeforeInput.count > 1 {
+        let beforeInput = textDocumentProxy.documentContextBeforeInput,
+        beforeInput.count > 1 {
         textDocumentProxy.deleteBackward()
     }
     
