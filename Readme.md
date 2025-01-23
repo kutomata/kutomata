@@ -59,7 +59,7 @@ func deleteCharacter() {
     
     if result.needToModifyPreviousText,
         let beforeInput = textDocumentProxy.documentContextBeforeInput,
-        beforeInput.count > 1 {
+        beforeInput.count > 0 {
         textDocumentProxy.deleteBackward()
     }
     
