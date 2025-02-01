@@ -23,6 +23,13 @@ Kutomata helps Swift handle Korean input naturally.
 - Supports deletion by distinguishing between units of consonants/vowels and character.
 
 ## Installation using SPM
+- Using Swift Package Manager
+```swift
+dependencies: [
+    .package(url: "https://github.com/kutomata/kutomata.git", .upToNextMajor(from: "1.0.0"))
+]
+```
+
 
 ## Usage
 ```swift
